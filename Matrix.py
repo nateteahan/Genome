@@ -107,3 +107,73 @@ class Matrix:
         return left_string, top_string
 
 
+class Restricted:
+    def __init__(self, sequence_one, sequence_two):
+        # n equals the size of the largest string
+        if len(sequence_one) > len(sequence_two):
+            self.rows = len(sequence_one) + 1
+        else:
+            self.rows = len(sequence_two) + 1
+
+        self.bandwidth = 7
+        self.top_sequence = sequence_one
+        self.left_sequence = sequence_two
+        self.array = [[0 for i in range(self.bandwidth)] for j in range(self.rows)]
+        self.previous = [["" for i in range(self.bandwidth)] for j in range(self.rows)]
+
+        # Take care of initializing the blank spaces in the upper left diagonal region of array
+        max_blanks = 3
+        current_num_blanks = 3
+        row = 0
+        for i in range(max_blanks):
+            col = 0
+            while current_num_blanks != 0:
+                self.array[row][col] = None
+                current_num_blanks -= 1
+                col += 1
+            row += 1
+            max_blanks -= 1
+            current_num_blanks = max_blanks
+
+        # Take care of initializing the blank spaces in the lower right diagonal region of array
+        max_blanks = 3
+        current_num_blanks = 3
+        row = self.rows - 1
+        for i in range(max_blanks):
+            col = self.bandwidth - 1
+            while current_num_blanks != 0:
+                self.array[row][col] = None
+                current_num_blanks -= 1
+                col -= 1
+            row -= 1
+            max_blanks -= 1
+            current_num_blanks = max_blanks
+
+        # Take care of initializing the base case values in the array
+        self.initialize_base()
+
+    def initialize_base(self):
+        row = 0
+        col = 3
+
+        # Handle first row base case
+        _sum = 0
+        for col in range(self.bandwidth):
+            if self.array[row][col] is not None:
+                self.array[row][col] = _sum
+                _sum += 5
+
+        row += 1
+        col = 0
+        _sum = 5
+        while row != 4:
+            while self.array[row][col] is None:
+                col += 1
+            self.array[row][col] = _sum
+            _sum += 5
+            row += 1
+            col = 0
+
+        return
+
+

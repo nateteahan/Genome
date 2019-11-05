@@ -47,10 +47,15 @@ class GeneSequencing:
 # your code should replace these three statements and populate the three variables: score, alignment1 and alignment2
 					sequence_one = sequences[i][:align_length]
 					sequence_two = sequences[j][:align_length]
-					matrix = Matrix(sequence_one, sequence_two)
 
-					alignment1, alignment2 = matrix.compute_alignment()
-					score = matrix.get_final_score()
+					if banded:
+						matrix = Restricted(sequence_one, sequence_two)
+
+					else:
+						matrix = Matrix(sequence_one, sequence_two)
+
+						alignment1, alignment2 = matrix.compute_alignment()
+						score = matrix.get_final_score()
 
 					# score = i+j;
 					# alignment1 = 'abc-easy  DEBUG:(seq{}, {} chars,align_len={}{})'.format(i+1,
