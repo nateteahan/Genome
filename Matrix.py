@@ -176,4 +176,22 @@ class Restricted:
 
         return
 
+    def get_left(self, row, col):
+        if col < 1:
+            return None
+        return self.array[row][col - 1]
+
+    def get_above(self, row, col):
+        if row < 1 or col == self.bandwidth - 1:
+            return None
+        return self.array[row - 1][col + 1]
+
+    def get_diagonal(self, row, col):
+        return self.array[row - 1][col]
+
+    def get_top_index(self, row, col):
+        # 4 is the last row of the base case val.
+        # row - 4 returns how far down the band we are from the last base value 15
+        # + col just makes sure that we get the right index as we move across the row
+        return (row - 4) + col
 
