@@ -49,7 +49,16 @@ class GeneSequencing:
 					sequence_two = sequences[j][:align_length]
 
 					if banded:
-						matrix = Restricted(sequence_one, sequence_two)
+						if (i == 0 or i == 1) and j > 1:
+							score = float("inf")
+							alignment1, alignment2 = "No alignment possible", "No alignment possible"
+						elif i > 1 and (j == 0 or j == 1):
+							score = float("inf")
+							alignment1, alignment2 = "No alignment possible", "No alignment possible"
+						else:
+							matrix = Restricted(sequence_one, sequence_two)
+							alignment1, alignment2 = matrix.compute_alignment()
+							score = matrix.get_final_score()
 
 					else:
 						matrix = Matrix(sequence_one, sequence_two)
