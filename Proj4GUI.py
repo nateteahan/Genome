@@ -187,7 +187,7 @@ class Proj4GUI( QMainWindow ):
 
 		self.banded		= QCheckBox('Banded')
 		self.banded.setChecked(False)
-		self.alignLength	  = QLineEdit('1000')
+		self.alignLength	  = QLineEdit('30')
 		font = QFont()
 		font.setFamily("Courier")
 		self.seq1_name	   = QLineEdit('')

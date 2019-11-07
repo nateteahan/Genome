@@ -193,6 +193,7 @@ class Restricted:
     def compute_element(self, row, col):
         index = self.get_index(row, col)
 
+        # problem is passing in index instead of column..
         if self.determine_match(row, index):
             diagonal = self.get_diagonal(row, col) - 3
         else:
@@ -250,7 +251,6 @@ class Restricted:
         current = self.previous[row][column]
         left_string = self.left_sequence
         top_string = self.top_sequence
-
         while current is not "":
             if current == "diagonal":
                 # banded algorithm means value is just up a row
@@ -269,14 +269,14 @@ class Restricted:
 
             current = self.previous[row][column]
 
-        # while row != 0:
-        #     top_string = top_string[:column] + '-' + top_string[column:]
-        #     row -= 1
-        # while column != 0:
-        #     left_string = left_string[:row] + '-' + left_string[row:]
-        #     column -= 1
-        #
-        # print(left_string + '\n' + top_string)
+        while row != 0:
+            top_string = top_string[:column] + '-' + top_string[column:]
+            row -= 1
+        while column > 3:
+            left_string = left_string[:row] + '-' + left_string[row:]
+            column -= 1
+
+        print(left_string + '\n' + top_string)
 
         return left_string, top_string
 
