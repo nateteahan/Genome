@@ -25,12 +25,6 @@ class GeneSequencing:
 	def __init__( self ):
 		pass
 
-	
-# This is the method called by the GUI.  _sequences_ is a list of the ten sequences, _table_ is a
-# handle to the GUI so it can be updated as you find results, _banded_ is a boolean that tells
-# you whether you should compute a banded alignment or full alignment, and _align_length_ tells you 
-# how many base pairs to use in computing the alignment
-
 	def align( self, sequences, table, banded, align_length):
 		self.banded = banded
 		self.MaxCharactersToAlign = align_length
@@ -43,8 +37,6 @@ class GeneSequencing:
 				if(j < i):
 					s = {}
 				else:
-###################################################################################################
-# your code should replace these three statements and populate the three variables: score, alignment1 and alignment2
 					sequence_one = sequences[i][:align_length]
 					sequence_two = sequences[j][:align_length]
 
@@ -58,20 +50,18 @@ class GeneSequencing:
 						else:
 							matrix = Restricted(sequence_one, sequence_two)
 							alignment1, alignment2 = matrix.compute_alignment()
+							# alignment1 = alignment1[:99]
+							# alignment2 = alignment2[:99]
 							score = matrix.get_final_score()
 
 					else:
 						matrix = Matrix(sequence_one, sequence_two)
 
 						alignment1, alignment2 = matrix.compute_alignment()
+						# alignment1 = alignment1[:99]
+						# alignment2 = alignment2[:99]
 						score = matrix.get_final_score()
 
-					# score = i+j;
-					# alignment1 = 'abc-easy  DEBUG:(seq{}, {} chars,align_len={}{})'.format(i+1,
-					# 	len(sequences[i]), align_length, ',BANDED' if banded else '')
-					# alignment2 = 'as-123--  DEBUG:(seq{}, {} chars,align_len={}{})'.format(j+1,
-					# 	len(sequences[j]), align_length, ',BANDED' if banded else '')
-###################################################################################################					
 					s = {'align_cost':score, 'seqi_first100':alignment1, 'seqj_first100':alignment2}
 					table.item(i,j).setText('{}'.format(int(score) if score != math.inf else score))
 					table.update()	
